@@ -1,7 +1,7 @@
 import { Page, Locator , expect } from '@playwright/test';
 
 
-export class MobileNotificationTemplatePage {
+export class MobileManageAndNotiPage {
     page:Page;
     /**
  * LOCATORS SECTION

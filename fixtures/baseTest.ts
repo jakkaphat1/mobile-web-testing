@@ -1,20 +1,26 @@
 import { test as base } from '@playwright/test';
-import { MobileNotificationTemplatePage } from '../pages/MobileNotificationTemplatePage';
+import { MobileManageAndNotiPage } from '../pages/MobileManageAndNotiPage';
 import { CommonPage } from '../pages/CommonPage';
+import { MobileManageTermAndConditionsPage } from '../pages/MobileManageTermAndConditionsPage';
 
 type MyFixtures = {
-    mobileNotificationTemplatePage: MobileNotificationTemplatePage
+    mobileManageAndNotiPage: MobileManageAndNotiPage
     commonPage : CommonPage
+    mobileManageTermAndConditionsPage : MobileManageTermAndConditionsPage
 };
 
 export const test = base.extend<MyFixtures>({
-    mobileNotificationTemplatePage: async ({ page }, use) => {
-        const mobileNotificationTemplatePage = new MobileNotificationTemplatePage(page);
-        await use(mobileNotificationTemplatePage)
+    mobileManageAndNotiPage: async ({ page }, use) => {
+        const mobileManageAndNotiPage = new MobileManageAndNotiPage(page);
+        await use(mobileManageAndNotiPage)
     },
     commonPage: async ({ page }, use) => {
         const commonPage = new CommonPage(page);
         await use(commonPage)
+    },
+    mobileManageTermAndConditionsPage:async ({ page } , use) => {
+        const mobileManageTermAndConditionsPage = new MobileManageTermAndConditionsPage(page);
+        await use(mobileManageTermAndConditionsPage)
     }
 
 });
