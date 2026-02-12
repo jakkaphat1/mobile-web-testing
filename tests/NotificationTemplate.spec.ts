@@ -7,6 +7,14 @@ test.describe('NIDA Mobile Module (Admin)', () => {
         await commonPage.fillUsernameAndPasswordInLoginPage('sys_admin1','unext@2022');
     })
 
+    test('TC-02 การเข้าใช้งานเมนูจัดการ เงื่อนไข/การยินยอม เพื่อใช้บริการแอปพลิเคชัน' , async ({ page, mobileNotificationTemplatePage , commonPage}) => {
+        await commonPage.gotoBackOfficeDashboardPage();
+        await mobileNotificationTemplatePage.clickManageMobileAndNotificationMenu()
+        await mobileNotificationTemplatePage.clickWorkingBtn()
+        await mobileNotificationTemplatePage.clickManageTermAndConditionsBtn()
+        await expect(page).toHaveURL('https://backoffice-uat.nida.ac.th/admin/notification/transaction/consent');
+    })
+
 
 
 });

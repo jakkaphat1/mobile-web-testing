@@ -9,7 +9,7 @@ export class CommonPage {
     username : Locator
     password : Locator
     backofficeURL = 'https://backoffice-uat.nida.ac.th/login';
-
+    backofficeDashboardURL = 'https://backoffice-uat.nida.ac.th/admin/rolesAndPermissions/master/role-permission';
 
 
     /**
@@ -30,6 +30,10 @@ export class CommonPage {
         await this.page.goto(this.backofficeURL);
     }
 
+    async gotoBackOfficeDashboardPage(){
+        await this.page.goto(this.backofficeDashboardURL);
+    }
+    
     async fillUsernameAndPasswordInLoginPage(username : string , password : string) {
         await this.username.pressSequentially(username);
         await this.password.pressSequentially(password);

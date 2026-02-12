@@ -33,7 +33,7 @@ export default defineConfig({
 
     {
       name: 'chromium-ui',
-      testMatch: ['**/*.spec.ts'],
+      // testMatch: ['**/*.spec.ts'],
       use: { 
         // ...devices['Desktop Chrome'],
         browserName: 'chromium',
