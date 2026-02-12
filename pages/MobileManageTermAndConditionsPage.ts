@@ -10,6 +10,7 @@ export class MobileManageTermAndConditionsPage {
     chooseVersionDropdown
     chooseStatusDropdown
     searchButton
+    clearFilterButton
 
     /**
  * Constructor SECTION
@@ -20,6 +21,7 @@ export class MobileManageTermAndConditionsPage {
         this.chooseVersionDropdown = this.page.locator('div').filter({ hasText: /^เลือกเวอร์ชัน$/ }).nth(3)
         this.chooseStatusDropdown = this.page.locator('div').filter({ hasText: /^ใช้งาน$/ }).nth(3)
         this.searchButton = this.page.getByRole('button', { name: 'ค้นหา' })
+        this.clearFilterButton = this.page.getByRole('button').nth(3)
     }
 
     /**
@@ -42,5 +44,9 @@ export class MobileManageTermAndConditionsPage {
 
     async clickSearchButton(){
         await this.searchButton.click()
+    }
+
+    async clickClearFilterButton(){
+        await this.clearFilterButton.click()
     }
 }

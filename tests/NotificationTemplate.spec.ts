@@ -21,11 +21,13 @@ test.describe('NIDA Mobile Module (Admin)', () => {
         await mobileManageAndNotiPage.clickWorkingBtn()
         await mobileManageAndNotiPage.clickManageTermAndConditionsBtn()
         await expect(page).toHaveURL('https://backoffice-uat.nida.ac.th/admin/notification/transaction/consent');
-        await mobileManageTermAndConditionsPage.selectWorkType('REGISTER'); //SUPER_APP - ระบบ Mobile Super
+        await mobileManageTermAndConditionsPage.selectWorkType('SUPER_APP - ระบบ Mobile Super'); //SUPER_APP - ระบบ Mobile Super หรือ REGISTER
         await mobileManageTermAndConditionsPage.selectVersion('1.x');
         await mobileManageTermAndConditionsPage.selectStatus('ใช้งาน'); //หรือ ไม่ใช้งาน
         await mobileManageTermAndConditionsPage.clickSearchButton()
-        
+        await page.waitForTimeout(1000);
+        await mobileManageTermAndConditionsPage.clickClearFilterButton()
+        await page.waitForTimeout(1000);
     })
 
 });
