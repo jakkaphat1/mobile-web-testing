@@ -68,4 +68,15 @@ test.describe('NIDA Mobile Module (Admin)', () => {
         await mobileManageTermAndConditionsPage.clickConfirmButton()
         await expect(page.getByText('บันทึกข้อมูลสำเร็จ')).toBeVisible();
     })
+
+    test('TC-06 ทดสอบลบเงื่อนไข/การยินยอม เพื่อใช้บริการแอปพลิเคชัน' , async ({ page, mobileManageAndNotiPage , commonPage ,mobileManageTermAndConditionsPage}) => {
+        await commonPage.gotoBackOfficeDashboardPage();
+        await mobileManageAndNotiPage.clickManageMobileAndNotificationMenu()
+        await mobileManageAndNotiPage.clickWorkingBtn()
+        await mobileManageAndNotiPage.clickManageTermAndConditionsBtn()
+        await expect(page).toHaveURL('https://backoffice-uat.nida.ac.th/admin/notification/transaction/consent');
+        await mobileManageTermAndConditionsPage.clickDeleteButton('REGISTER - 1.6')
+        await mobileManageTermAndConditionsPage.clickConfirmButton()
+        await expect(page.getByText('ทำรายการสำเร็จแล้ว')).toBeVisible();
+    })
 });
