@@ -30,4 +30,24 @@ test.describe('NIDA Mobile Module (Admin)', () => {
         await page.waitForTimeout(1000);
     })
 
+    test('TC-04 ทดสอบเพิ่มเงื่อนไข/การยินยอม เพื่อใช้บริการแอปพลิเคชัน' , async ({ page, mobileManageAndNotiPage , commonPage ,mobileManageTermAndConditionsPage}) => {
+        await commonPage.gotoBackOfficeDashboardPage();
+        await mobileManageAndNotiPage.clickManageMobileAndNotificationMenu()
+        await mobileManageAndNotiPage.clickWorkingBtn()
+        await mobileManageAndNotiPage.clickManageTermAndConditionsBtn()
+        await expect(page).toHaveURL('https://backoffice-uat.nida.ac.th/admin/notification/transaction/consent');
+        await mobileManageTermAndConditionsPage.clickAddTermButton()
+        await expect(page).toHaveURL('https://backoffice-uat.nida.ac.th/admin/notification/transaction/consent/create');
+        await mobileManageTermAndConditionsPage.selectSystemDropdown('ระบบดำเนินการฝ่ายเจ้าหน้าที่')    
+        await mobileManageTermAndConditionsPage.checkAddTermAndConditionPage()
+        await mobileManageTermAndConditionsPage.changeVersion('+')
+        await mobileManageTermAndConditionsPage.fillTermAndConditionTH('ทดสอบเพิ่มเงื่อนไข ภาษาไทย')
+        await mobileManageTermAndConditionsPage.fillTermAndConditionEN('ทดสอบเพิ่มเงื่อนไข ภาษาอังกฤษ')
+        await mobileManageTermAndConditionsPage.fillPolicyTH('ทดสอบเพิ่มนโยบาย ภาษาไทย')
+        await mobileManageTermAndConditionsPage.fillPolicyEN('ทดสอบเพิ่มนโยบาย ภาษาอังกฤษ')
+        await mobileManageTermAndConditionsPage.clickSaveButton()
+        await mobileManageTermAndConditionsPage.clickConfirmButton()
+        await expect(page.getByText('บันทึกข้อมูลสำเร็จ')).toBeVisible();
+    })
+
 });
