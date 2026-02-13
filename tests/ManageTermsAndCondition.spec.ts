@@ -50,4 +50,22 @@ test.describe('NIDA Mobile Module (Admin)', () => {
         await expect(page.getByText('บันทึกข้อมูลสำเร็จ')).toBeVisible();
     })
 
+    test('TC-05 ทดสอบเพิ่มเงื่อนไข/การยินยอม เพื่อใช้บริการแอปพลิเคชัน' , async ({ page, mobileManageAndNotiPage , commonPage ,mobileManageTermAndConditionsPage}) => {
+        await commonPage.gotoBackOfficeDashboardPage();
+        await mobileManageAndNotiPage.clickManageMobileAndNotificationMenu()
+        await mobileManageAndNotiPage.clickWorkingBtn()
+        await mobileManageAndNotiPage.clickManageTermAndConditionsBtn()
+        await expect(page).toHaveURL('https://backoffice-uat.nida.ac.th/admin/notification/transaction/consent');
+        await mobileManageTermAndConditionsPage.clickEditButton('REGISTER - 1.6')
+        await expect(page).toHaveURL(/.*\/consent\/edit\/.*/);
+        await mobileManageTermAndConditionsPage.checkAddTermAndConditionPage()
+        await mobileManageTermAndConditionsPage.clearInputField()
+        await mobileManageTermAndConditionsPage.fillTermAndConditionTH('ทดสอบเพิ่มเงื่อนไข ภาษาไทย (ใหม่)')
+        await mobileManageTermAndConditionsPage.fillTermAndConditionEN('ทดสอบเพิ่มเงื่อนไข ภาษาอังกฤษ(ใหม่)')
+        await mobileManageTermAndConditionsPage.fillPolicyTH('ทดสอบเพิ่มนโยบาย ภาษาไทย(ใหม่)')
+        await mobileManageTermAndConditionsPage.fillPolicyEN('ทดสอบเพิ่มนโยบาย ภาษาอังกฤษ(ใหม่)')
+        await mobileManageTermAndConditionsPage.clickSaveButton()
+        await mobileManageTermAndConditionsPage.clickConfirmButton()
+        await expect(page.getByText('บันทึกข้อมูลสำเร็จ')).toBeVisible();
+    })
 });

@@ -133,4 +133,16 @@ export class MobileManageTermAndConditionsPage {
     async clickConfirmButton(){
         await this.ConfirmButton.click()
     }
+
+    async clickEditButton(SystemAndVersion: string){
+        const card = this.page.locator('.card-container').filter({ hasText: SystemAndVersion });
+        await card.locator('.buttonAction_list button').first().click();
+    }
+
+    async clearInputField(){
+        await this.TermAndConditionTHInputBox.clear()
+        await this.TermAndConditionENInputBox.clear()
+        await this.PolicyTHInputBox.clear()
+        await this.PolicyENInputBox.clear()
+    }
 }
