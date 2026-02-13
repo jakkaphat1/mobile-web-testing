@@ -13,6 +13,12 @@ export class MobileManageTemplateAndNotiPage {
     inuseStatus
     notuseStatus
     searchButton
+    expandFilterButton
+    campusButton
+    levelEducationButton
+    chooseModule
+    chooseTemplateType
+    systemWork
     /**
  * Constructor SECTION
  * ---------------------------------------------------------------- */
@@ -27,7 +33,13 @@ export class MobileManageTemplateAndNotiPage {
         this.inuseStatus = this.page.getByRole('option', { name: 'ใช้งาน', exact: true })
         this.notuseStatus = this.page.getByRole('option', { name: 'ไม่ใช้งาน' })
         this.searchButton = this.page.getByRole('button', { name: 'ค้นหา' })
+        this.expandFilterButton = this.page.locator('button.button_collapse');
 
+        this.campusButton = this.page.locator('div').filter({ hasText: /^เลือกวิทยาเขต$/ }).nth(3)
+        this.levelEducationButton = this.page.locator('div').filter({ hasText: /^เลือกระดับการศึกษา$/ }).nth(3)
+        this.chooseModule = this.page.locator('div').filter({ hasText: /^เลือกโมดูล$/ }).nth(3)
+        this.chooseTemplateType = this.page.locator('div').filter({ hasText: /^เลือกประเภท Template$/ }).nth(3)
+        this.systemWork = this.page.locator('div').filter({ hasText: /^เลือกระบบงาน$/ }).nth(3)
     }
 
     /**
@@ -71,5 +83,59 @@ export class MobileManageTemplateAndNotiPage {
 
     async clickSearchButton(){
         await this.searchButton.click()
+    }
+
+    async clickExpandFilterButton(){
+        await this.expandFilterButton.click()
+    }
+
+    async clickCampusDropdown(option : "ส่วนกลาง" | "สีคิ้ว" | "สยาม"){
+        await this.campusButton.click()
+        switch (option){
+            case 'ส่วนกลาง':
+                await this.page.getByRole('option', { name: '- ส่วนกลาง' }).click()   
+                console.log('เลือกส่วนกลาง')
+                break;
+            case 'สีคิ้ว':
+                await this.page.getByRole('option', { name: '- สีคิ้ว' }).click()   
+                console.log('เลือกสีคิ้ว')
+                break;
+            case 'สยาม':
+                await this.page.getByRole('option', { name: '- สยาม' }).click()   
+                console.log('เลือกสยาม')
+                break;
+        }
+    }
+
+    async clickLevelEdicationButton(option: "ปริญญาโท" | "ปริญญาเอก"){
+        await this.levelEducationButton.click()
+        switch (option){
+            case "ปริญญาโท":
+                await this.page.getByRole('option', { name: 'ปริญญาโท' }).click()
+                console.log('เลือกปริญญาโท')
+                break;
+            case "ปริญญาเอก":
+                await this.page.getByRole('option', { name: 'ปริญญาเอก' }).click()
+                console.log('เลือกปริญญาเอก')
+                break;
+        }
+    }
+
+    async chooseModuleDropdown(moduleName : string){
+        await this.chooseModule.click()
+        const dropdownModule = this.page.getByRole('option', { name: moduleName })
+        await dropdownModule.click()
+    }
+
+    async chooseTemplateTypeButton(moduleName : string){
+        await this.chooseTemplateType.click()
+        const dropdownTemplateType = this.page.getByRole('option', { name: moduleName })
+        await dropdownTemplateType.click()
+    }
+
+    async chooseSystemWorklTypeButton(moduleName : string){
+        await this.systemWork.click()
+        const dropdownSystemWork = this.page.getByRole('option', { name: moduleName })
+        await dropdownSystemWork.click()
     }
 }
