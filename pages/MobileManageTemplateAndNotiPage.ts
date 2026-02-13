@@ -1,5 +1,23 @@
 import { Page, Locator , expect } from '@playwright/test';
 
+export interface TemplateFormData {
+    notifyWay: string;   // เช่น 'Email' หรือ '1'
+    campus: string;      // เช่น 'ส่วนกลาง'
+    educationLevel: string; // เช่น 'ปริญญาโท'
+    module: string;      // เช่น 'ASM - งานประเมิน'
+    templateType: string;// เช่น 'ASM01'
+    systemWork: string;  // เช่น 'ระบบ Mobile Super App'
+
+    senderName : string;
+    category : string;
+    title : string;
+    link? : string;
+    messageContent : string;
+    checkboxOption : boolean
+    futureDate? : string
+}
+
+
 export class MobileManageTemplateAndNotiPage {
     page : Page;
     /**
@@ -19,6 +37,9 @@ export class MobileManageTemplateAndNotiPage {
     chooseModule
     chooseTemplateType
     systemWork
+    createTemplateNotifyButton
+    popupSaveButton
+    popupConfirmButton
     /**
  * Constructor SECTION
  * ---------------------------------------------------------------- */
@@ -40,6 +61,10 @@ export class MobileManageTemplateAndNotiPage {
         this.chooseModule = this.page.locator('div').filter({ hasText: /^เลือกโมดูล$/ }).nth(3)
         this.chooseTemplateType = this.page.locator('div').filter({ hasText: /^เลือกประเภท Template$/ }).nth(3)
         this.systemWork = this.page.locator('div').filter({ hasText: /^เลือกระบบงาน$/ }).nth(3)
+
+        this.createTemplateNotifyButton = this.page.getByRole('button', { name: 'สร้าง Template' })
+        this.popupSaveButton = this.page.getByRole('button', { name: 'บันทึก' })
+        this.popupConfirmButton = this.page.getByRole('button', { name: 'ยืนยัน' })
     }
 
     /**
@@ -137,5 +162,58 @@ export class MobileManageTemplateAndNotiPage {
         await this.systemWork.click()
         const dropdownSystemWork = this.page.getByRole('option', { name: moduleName })
         await dropdownSystemWork.click()
+    }
+
+    async clickCreateTemplateNotifyButton(){
+        await this.createTemplateNotifyButton.click()
+    }
+
+    async fillCreateTemplateForm(data: TemplateFormData){
+        await this.page.locator('div').filter({ hasText: /^เลือกช่องทางการแจ้งเตือน$/ }).nth(3).click();
+        await this.page.getByRole('option', { name: data.notifyWay }).click();
+
+        await this.page.locator('div').filter({ hasText: /^เลือกวิทยาเขต$/ }).nth(3).click();
+        await this.page.getByRole('option', { name: data.campus }).click();
+
+        await this.page.locator('div').filter({ hasText: /^เลือกระดับปริญญา$/ }).nth(3).click();
+        await this.page.getByRole('option', { name: data.educationLevel }).click();
+
+        await this.page.locator('div').filter({ hasText: /^เลือกโมดูล$/ }).nth(3).click();
+        await this.page.getByRole('option', { name: data.module }).click();
+
+        await this.page.locator('div').filter({ hasText: /^เลือกประเภท Template$/ }).nth(3).click();
+        await this.page.getByRole('option', { name: data.templateType }).click();
+
+        await this.page.locator('div').filter({ hasText: /^เลือกระบบงาน$/ }).nth(3).click();
+        await this.page.getByRole('option', { name: data.systemWork }).click();
+
+        await this.page.getByRole('textbox', { name: 'ระบุชื่อผู้ส่ง' }).pressSequentially(data.senderName)
+
+        await this.page.locator('div').filter({ hasText: /^เลือกหมวดหมู่$/ }).nth(3).click()
+        await this.page.getByRole('option', { name: data.category }).click()
+
+        await this.page.getByRole('textbox', { name: 'ระบุหัวข้อ' }).fill(data.title)
+
+        if(data.link){
+            await this.page.getByRole('textbox', { name: 'ระบุลิงก์' }).fill(data.link)
+        }
+
+        await this.page.getByRole('textbox', { name: 'ระบุข้อความ' }).fill(data.messageContent)
+
+        await this.page.getByRole('checkbox').nth(2).setChecked(data.checkboxOption);
+
+        if(data.checkboxOption == true && data.futureDate){
+            await this.page.getByRole('textbox', { name: 'ระบุจำนวนวันแจ้งเตือนล่วงหน้า' }).fill(data.futureDate)
+        }else{
+            console.log('ไม่แจ้งเตือนล่วงหน้า')
+        }
+    }
+
+    async clickSaveButton(){
+        await this.popupSaveButton.click()
+    }
+
+    async clickConfirmButton(){
+        await this.popupConfirmButton.click()
     }
 }
