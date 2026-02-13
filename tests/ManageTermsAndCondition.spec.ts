@@ -1,7 +1,7 @@
 import { test, expect } from '../fixtures/baseTest';
 import path from 'path';
 
-test.describe('NIDA Mobile Module (Admin)', () => {
+test.describe('NIDA Mobile Module (Admin) | จัดการเงื่อนไข/การยินยอม เพื่อใช้บริการแอปพลิเคชัน', () => {
     test('TC-01 การเข้าใช้งานระบบรับสมัครนักศึกษาใหม่ ส่วนงานดำเนินการฝ่ายเจ้าหน้าที่ (NIDA Back office)' , async ({ page, mobileManageAndNotiPage , commonPage}) => {
         await commonPage.gotoBackOfficeLandingPage();
         await commonPage.fillUsernameAndPasswordInLoginPage('sys_admin1','unext@2022');

@@ -2,11 +2,13 @@ import { test as base } from '@playwright/test';
 import { MobileManageAndNotiPage } from '../pages/MobileManageAndNotiPage';
 import { CommonPage } from '../pages/CommonPage';
 import { MobileManageTermAndConditionsPage } from '../pages/MobileManageTermAndConditionsPage';
+import { MobileManageTemplateAndNotiPage } from '../pages/MobileManageTemplateAndNotiPage.ts'
 
 type MyFixtures = {
     mobileManageAndNotiPage: MobileManageAndNotiPage
     commonPage : CommonPage
     mobileManageTermAndConditionsPage : MobileManageTermAndConditionsPage
+    mobileManageTemplateAndNotiPage : MobileManageTemplateAndNotiPage
 };
 
 export const test = base.extend<MyFixtures>({
@@ -21,7 +23,12 @@ export const test = base.extend<MyFixtures>({
     mobileManageTermAndConditionsPage:async ({ page } , use) => {
         const mobileManageTermAndConditionsPage = new MobileManageTermAndConditionsPage(page);
         await use(mobileManageTermAndConditionsPage)
+    },
+    mobileManageTemplateAndNotiPage:async ({ page } , use) => {
+        const mobileManageTemplateAndNotiPage = new MobileManageTemplateAndNotiPage(page);
+        await use(mobileManageTemplateAndNotiPage)
     }
+
 
 });
 
