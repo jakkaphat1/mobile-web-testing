@@ -11,7 +11,7 @@ export class MobileManageAndNotiPage {
     workingButton : Locator
     manageTemplateNotificationButton : Locator
     manageTermAndConditionsButton : Locator
-
+    manageSystemNotifyAndMobileApplicationButton : Locator
 
     /**
  * Constructor SECTION
@@ -22,7 +22,7 @@ export class MobileManageAndNotiPage {
         this.workingButton = this.page.locator('div:nth-child(19) > div > div > ul > div > li > .text');
         this.manageTemplateNotificationButton = this.page.getByRole('link', { name: 'จัดการ Template แจ้งเตือน' })
         this.manageTermAndConditionsButton = this.page.getByRole('link', { name: 'จัดการ เงื่อนไข/การยินยอม เพื่อใช้บริการแอปพลิเคชัน' })
-    
+        this.manageSystemNotifyAndMobileApplicationButton = this.page.getByRole('link', { name: 'จัดการค่าเริ่มต้นระบบ แจ้งเตือน/โมบาย แอปพลิเคชัน' })
     }
 
     /**
@@ -46,5 +46,10 @@ export class MobileManageAndNotiPage {
     async clickManageTermAndConditionsBtn(){
         await this.manageTermAndConditionsButton.scrollIntoViewIfNeeded()
         await this.manageTermAndConditionsButton.click()
+    }
+
+    async clickManageSystemNotifyAndMobileApplicationBtn(){
+        await this.manageSystemNotifyAndMobileApplicationButton.scrollIntoViewIfNeeded()
+        await this.manageSystemNotifyAndMobileApplicationButton.click()
     }
 }
