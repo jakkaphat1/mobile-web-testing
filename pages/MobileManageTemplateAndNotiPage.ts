@@ -174,6 +174,11 @@ export class MobileManageTemplateAndNotiPage {
         await card.locator('.buttonAction_button:not(.delete-button)').click();
     }
 
+    async clickDeleteButtonByCardName(cardName: string) {
+        const card = this.page.locator('.card-container').filter({ hasText: cardName });
+        await card.locator('.delete-button').click();
+    }
+
 
     async fillCreateTemplateForm(data: TemplateFormData){
         if (data.notifyWay) {

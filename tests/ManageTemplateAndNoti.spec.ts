@@ -106,4 +106,20 @@ test.describe('NIDA Mobile Module (Admin)', () => {
         await mobileManageTemplateAndNotiPage.clickSaveButton()
         await mobileManageTemplateAndNotiPage.clickConfirmButton()
     })
+
+    test('TC-06 ทดสอบลบ Template เเจ้งเตือน' , async ({ page, mobileManageAndNotiPage , commonPage , mobileManageTemplateAndNotiPage}) => {
+        await commonPage.gotoBackOfficeDashboardPage();
+        await mobileManageAndNotiPage.clickManageMobileAndNotificationMenu()
+        await mobileManageAndNotiPage.clickWorkingBtn()
+        await mobileManageAndNotiPage.clickManageTemplateNotiBtn()
+        await expect(page).toHaveURL('https://backoffice-uat.nida.ac.th/admin/notification/transaction/template');
+        await mobileManageTemplateAndNotiPage.clickExpandFilterButton()
+        await mobileManageTemplateAndNotiPage.chooseWaytoNotifyOption('2')
+        await mobileManageTemplateAndNotiPage.clickLevelEdicationButton('ปริญญาเอก')
+        await mobileManageTemplateAndNotiPage.chooseModuleDropdown('ASM - งานประเมิน')
+        await mobileManageTemplateAndNotiPage.clickSearchButton()
+        await mobileManageTemplateAndNotiPage.clickDeleteButtonByCardName('ASM02')
+        await mobileManageTemplateAndNotiPage.clickConfirmButton()
+        await expect(page.getByText('ทำรายการสำเร็จแล้ว')).toBeVisible();
+    })
 });
