@@ -15,4 +15,31 @@ VM7153:3 nth(5): ระบบ Mobile Super App
 VM7153:3 nth(6): ส่วนกลาง
 
 ใข้ในการหา .nth() ของ dropdown ในกรณีที่มีหลายอัน
+
+=================================================================================
+
+const inputs = document.querySelectorAll('input');
+inputs.forEach((el, i) => {
+    console.log(`nth(${i}): placeholder="${el.placeholder}" value="${el.value}" type="${el.type}"`);
+});
+
+ผลลัพธ์ 
+
+VM7567:3 nth(0): placeholder="" value="true" type="checkbox"
+VM7567:3 nth(1): placeholder="" value="on" type="checkbox"
+VM7567:3 nth(2): placeholder="" value="" type="text"
+VM7567:3 nth(3): placeholder="" value="" type="text"
+VM7567:3 nth(4): placeholder="" value="" type="text"
+VM7567:3 nth(5): placeholder="" value="" type="text"
+VM7567:3 nth(6): placeholder="" value="" type="text"
+VM7567:3 nth(7): placeholder="" value="" type="text"
+VM7567:3 nth(8): placeholder="ระบุชื่อผู้ส่ง" value="John Doe" type="text"
+VM7567:3 nth(9): placeholder="" value="" type="text"
+VM7567:3 nth(10): placeholder="ระบุหัวข้อ" value="แจ้งเตือนการทดสอบสร้าง Template" type="text"
+VM7567:3 nth(11): placeholder="ระบุลิงก์" value="https://backoffice-uat.nida.ac.th" type="text"
+VM7567:3 nth(12): placeholder="" value="on" type="checkbox"
+VM7567:3 nth(13): placeholder="ระบุจำนวนวันแจ้งเตือนล่วงหน้า" value="1" type="text"
+
+ใข้ในการหา .nth() ของ text input
+
 =================================================================================
