@@ -73,4 +73,37 @@ test.describe('NIDA Mobile Module (Admin)', () => {
         await mobileManageTemplateAndNotiPage.clickSaveButton()
         await mobileManageTemplateAndNotiPage.clickConfirmButton()
     })
+
+    test('TC-05 ทดสอบแก้ไข Template เเจ้งเตือน' , async ({ page, mobileManageAndNotiPage , commonPage , mobileManageTemplateAndNotiPage}) => {
+        await commonPage.gotoBackOfficeDashboardPage();
+        await mobileManageAndNotiPage.clickManageMobileAndNotificationMenu()
+        await mobileManageAndNotiPage.clickWorkingBtn()
+        await mobileManageAndNotiPage.clickManageTemplateNotiBtn()
+        await expect(page).toHaveURL('https://backoffice-uat.nida.ac.th/admin/notification/transaction/template');
+        await mobileManageTemplateAndNotiPage.clickExpandFilterButton()
+        await mobileManageTemplateAndNotiPage.chooseWaytoNotifyOption('2')
+        await mobileManageTemplateAndNotiPage.clickLevelEdicationButton('ปริญญาโท')
+        await mobileManageTemplateAndNotiPage.chooseModuleDropdown('ASM - งานประเมิน')
+        await mobileManageTemplateAndNotiPage.clickSearchButton()
+        await mobileManageTemplateAndNotiPage.clickEditButtonByCardName('ASM02')
+        await expect(page).toHaveURL(/\/edit\//);
+        const templateData = {
+            // notifyWay: 'Mobile Application',
+            campus: 'สีคิ้ว',
+            educationLevel: 'ปริญญาเอก',
+            module: 'ASM - งานประเมิน',
+            templateType: 'ASM02',
+            systemWork: 'ระบบ Mobile Super App',
+            senderName : 'John Smith',
+            category : 'ส่วนกลาง',
+            title : 'แจ้งเตือนการทดสอบแก้ไข Template',
+            link : 'https://backoffice-uat.nida.ac.th',
+            messageContent : 'ทดสอบเพิ่มเนื้อหาจากการทดสอบแก้ Template แจ้งเตือน',
+            checkboxOption : true,
+            futureDate : '1'
+        };
+        await mobileManageTemplateAndNotiPage.fillEditTemplateForm(templateData);
+        await mobileManageTemplateAndNotiPage.clickSaveButton()
+        await mobileManageTemplateAndNotiPage.clickConfirmButton()
+    })
 });

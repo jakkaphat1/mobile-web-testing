@@ -1,19 +1,19 @@
 import { Page, Locator , expect } from '@playwright/test';
 
 export interface TemplateFormData {
-    notifyWay: string;   // เช่น 'Email' หรือ '1'
-    campus: string;      // เช่น 'ส่วนกลาง'
-    educationLevel: string; // เช่น 'ปริญญาโท'
-    module: string;      // เช่น 'ASM - งานประเมิน'
-    templateType: string;// เช่น 'ASM01'
-    systemWork: string;  // เช่น 'ระบบ Mobile Super App'
+    notifyWay?: string;   // เช่น 'Email' หรือ '1'
+    campus?: string;      // เช่น 'ส่วนกลาง'
+    educationLevel?: string; // เช่น 'ปริญญาโท'
+    module?: string;      // เช่น 'ASM - งานประเมิน'
+    templateType?: string;// เช่น 'ASM01'
+    systemWork?: string;  // เช่น 'ระบบ Mobile Super App'
 
-    senderName : string;
-    category : string;
-    title : string;
+    senderName? : string;
+    category? : string;
+    title? : string;
     link? : string;
-    messageContent : string;
-    checkboxOption : boolean
+    messageContent? : string;
+    checkboxOption? : boolean
     futureDate? : string
 }
 
@@ -108,6 +108,7 @@ export class MobileManageTemplateAndNotiPage {
 
     async clickSearchButton(){
         await this.searchButton.click()
+        await this.page.waitForTimeout(2000)
     }
 
     async clickExpandFilterButton(){
@@ -168,39 +169,68 @@ export class MobileManageTemplateAndNotiPage {
         await this.createTemplateNotifyButton.click()
     }
 
+    async clickEditButtonByCardName(cardName: string) {
+        const card = this.page.locator('.card-container').filter({ hasText: cardName });
+        await card.locator('.buttonAction_button:not(.delete-button)').click();
+    }
+
+
     async fillCreateTemplateForm(data: TemplateFormData){
-        await this.page.locator('div').filter({ hasText: /^เลือกช่องทางการแจ้งเตือน$/ }).nth(3).click();
-        await this.page.getByRole('option', { name: data.notifyWay }).click();
+        if (data.notifyWay) {
+            await this.page.locator('div').filter({ hasText: /^เลือกช่องทางการแจ้งเตือน$/ }).nth(3).click();
+            await this.page.getByRole('option', { name: data.notifyWay }).click();
+        }   
 
-        await this.page.locator('div').filter({ hasText: /^เลือกวิทยาเขต$/ }).nth(3).click();
-        await this.page.getByRole('option', { name: data.campus }).click();
-
-        await this.page.locator('div').filter({ hasText: /^เลือกระดับปริญญา$/ }).nth(3).click();
-        await this.page.getByRole('option', { name: data.educationLevel }).click();
-
-        await this.page.locator('div').filter({ hasText: /^เลือกโมดูล$/ }).nth(3).click();
-        await this.page.getByRole('option', { name: data.module }).click();
-
-        await this.page.locator('div').filter({ hasText: /^เลือกประเภท Template$/ }).nth(3).click();
-        await this.page.getByRole('option', { name: data.templateType }).click();
-
-        await this.page.locator('div').filter({ hasText: /^เลือกระบบงาน$/ }).nth(3).click();
-        await this.page.getByRole('option', { name: data.systemWork }).click();
-
-        await this.page.getByRole('textbox', { name: 'ระบุชื่อผู้ส่ง' }).pressSequentially(data.senderName)
-
-        await this.page.locator('div').filter({ hasText: /^เลือกหมวดหมู่$/ }).nth(3).click()
-        await this.page.getByRole('option', { name: data.category }).click()
-
-        await this.page.getByRole('textbox', { name: 'ระบุหัวข้อ' }).fill(data.title)
-
-        if(data.link){
-            await this.page.getByRole('textbox', { name: 'ระบุลิงก์' }).fill(data.link)
+        if (data.campus) {
+            await this.page.locator('div').filter({ hasText: /^เลือกวิทยาเขต$/ }).nth(3).click();
+            await this.page.getByRole('option', { name: data.campus }).click();
         }
 
-        await this.page.getByRole('textbox', { name: 'ระบุข้อความ' }).fill(data.messageContent)
+        if (data.educationLevel) {
+            await this.page.locator('div').filter({ hasText: /^เลือกระดับปริญญา$/ }).nth(3).click();
+            await this.page.getByRole('option', { name: data.educationLevel }).click();
+        }
 
-        await this.page.getByRole('checkbox').nth(2).setChecked(data.checkboxOption);
+        if (data.module) {
+            await this.page.locator('div').filter({ hasText: /^เลือกโมดูล$/ }).nth(3).click();
+            await this.page.getByRole('option', { name: data.module }).click();
+        }
+
+        if (data.templateType) {
+            await this.page.locator('div').filter({ hasText: /^เลือกประเภท Template$/ }).nth(3).click();
+            await this.page.getByRole('option', { name: data.templateType }).click();
+        }
+
+        if (data.systemWork) {
+            await this.page.locator('div').filter({ hasText: /^เลือกระบบงาน$/ }).nth(3).click();
+            await this.page.getByRole('option', { name: data.systemWork }).click();
+        }
+
+        if (data.senderName) {
+        // เปลี่ยนจาก pressSequentially เป็น fill เพื่อความรวดเร็วและรองรับการ Edit
+        await this.page.getByRole('textbox', { name: 'ระบุชื่อผู้ส่ง' }).fill(data.senderName);
+        }
+
+        if (data.category) {
+            await this.page.locator('div').filter({ hasText: /^เลือกหมวดหมู่$/ }).nth(3).click();
+            await this.page.getByRole('option', { name: data.category }).click();
+        }
+
+        if (data.title) {
+            await this.page.getByRole('textbox', { name: 'ระบุหัวข้อ' }).fill(data.title);
+        }
+
+        if (data.link) {
+            await this.page.getByRole('textbox', { name: 'ระบุลิงก์' }).fill(data.link);
+        }
+
+        if (data.messageContent) {
+            await this.page.getByRole('textbox', { name: 'ระบุข้อความ' }).fill(data.messageContent);
+        }
+
+        if (data.checkboxOption !== undefined) {
+            await this.page.getByRole('checkbox').nth(2).setChecked(data.checkboxOption);
+        }
 
         if(data.checkboxOption == true && data.futureDate){
             await this.page.getByRole('textbox', { name: 'ระบุจำนวนวันแจ้งเตือนล่วงหน้า' }).fill(data.futureDate)
@@ -208,6 +238,73 @@ export class MobileManageTemplateAndNotiPage {
             console.log('ไม่แจ้งเตือนล่วงหน้า')
         }
     }
+
+    async fillEditTemplateForm(data: TemplateFormData){
+        const dropdowns = this.page.locator('.react-select__control');
+
+        // if (data.notifyWay) {
+        //     await dropdowns.nth(0).click();
+        //     await this.page.locator('div').filter({ hasText: /^เลือกช่องทางการแจ้งเตือน$/ }).nth(3).click();
+        //     await this.page.getByRole('option', { name: data.notifyWay }).click();
+        // }   
+
+        if (data.campus) {
+            await dropdowns.nth(1).click();
+            await this.page.getByRole('option', { name: data.campus }).click();
+        }
+
+        if (data.educationLevel) {
+            await dropdowns.nth(2).click();
+            await this.page.getByRole('option', { name: data.educationLevel }).click();
+        }
+
+        if (data.module) {
+            await dropdowns.nth(3).click();
+            await this.page.getByRole('option', { name: data.module }).click();
+        }
+
+        if (data.templateType) {
+            await dropdowns.nth(4).click();
+            await this.page.getByRole('option', { name: data.templateType }).click();
+        }
+
+        if (data.systemWork) {
+            await dropdowns.nth(5).click();
+            await this.page.getByRole('option', { name: data.systemWork }).click();
+        }
+
+        if (data.senderName) {
+            await this.page.getByRole('textbox', { name: 'ระบุชื่อผู้ส่ง' }).fill(data.senderName);
+        }
+
+        if (data.category) {
+            await dropdowns.nth(6).click();
+            await this.page.getByRole('option', { name: data.category }).click();
+        }
+
+        if (data.title) {
+            await this.page.getByRole('textbox', { name: 'ระบุหัวข้อ' }).fill(data.title);
+        }
+
+        if (data.link) {
+            await this.page.getByRole('textbox', { name: 'ระบุลิงก์' }).fill(data.link);
+        }
+
+        if (data.messageContent) {
+            await this.page.getByRole('textbox', { name: 'ระบุข้อความ' }).fill(data.messageContent);
+        }
+
+        if (data.checkboxOption !== undefined) {
+            await this.page.getByRole('checkbox').nth(2).setChecked(data.checkboxOption);
+        }
+
+        if(data.checkboxOption == true && data.futureDate){
+            await this.page.getByRole('textbox', { name: 'ระบุจำนวนวันแจ้งเตือนล่วงหน้า' }).fill(data.futureDate)
+        }else{
+            console.log('ไม่แจ้งเตือนล่วงหน้า')
+        }
+    }
+
 
     async clickSaveButton(){
         await this.popupSaveButton.click()
