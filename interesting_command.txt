@@ -1,0 +1,18 @@
+ใน tab console ของ chrome
+
+const dropdowns = document.querySelectorAll('.react-select__control');
+dropdowns.forEach((el, i) => {
+    console.log(`nth(${i}):`, el.innerText);
+});
+
+ผลลัพธ์ 
+VM7153:3 nth(0): Mobile Application
+VM7153:3 nth(1): 0 - ส่วนกลาง
+VM7153:3 nth(2): ปริญญาโท
+VM7153:3 nth(3): ASM - งานประเมิน
+VM7153:3 nth(4): ASM02 - รหัสแจ้งเตือนนิสิต ประเมินอาจารย์ที่ปรึกษา
+VM7153:3 nth(5): ระบบ Mobile Super App
+VM7153:3 nth(6): ส่วนกลาง
+
+ใข้ในการหา .nth() ของ dropdown ในกรณีที่มีหลายอัน
+=================================================================================
