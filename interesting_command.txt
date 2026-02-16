@@ -43,3 +43,25 @@ VM7567:3 nth(13): placeholder="ระบุจำนวนวันแจ้ง�
 ใข้ในการหา .nth() ของ text input
 
 =================================================================================
+
+$x("//div[contains(@class, 'contentFrame_container')]//button[contains(., 'บันทึก')]")
+
+ผลลัพธ์
+0
+: 
+button.button_btn.button_md.button_primary.button_solid.btn
+1
+: 
+button.button_btn.button_md.button_primary.button_solid.btn
+2
+: 
+button.button_btn.button_md.button_primary.button_solid.btn
+3
+: 
+button.button_btn.button_md.button_primary.button_solid.btn
+length
+: 
+4
+
+ใข้ในการหา .nth() ของ button[contains(., 'บันทึก')
+=================================================================================
